@@ -106,8 +106,14 @@ class ADNI_tabular(torch.utils.data.Dataset):
         batch['FollowupYear'] = self.sample_points.loc[index, 'FollowupYear']
         batch['delta_t'] = self.sample_points.loc[index, 'delta_t']
         batch['FollowupDX'] = self.df_dict[self.sample_points.loc[index, 'FollowupDX']]
-        batch['Features'] = self.preprocessed_features.loc[index].values
-        batch['MissingnessMask'] = self.missingness_mask.loc[index].values
+        
+        # ADDED
+        features_array = self.preprocessed_features.loc[index].values.astype(np.float32)
+        mask_array = self.missingness_mask.loc[index].values.astype(np.float32) # Use float32 or int64
+
+        batch['Features'] = torch.from_numpy(features_array)
+        batch['MissingnessMask'] = torch.from_numpy(mask_array)
+        
         batch['SampleWeight'] = self.sample_weights.loc[index, 'SampleWeight']
 
         return batch

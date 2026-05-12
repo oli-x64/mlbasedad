@@ -15,7 +15,7 @@ from models.nmm import NMM
 from models.nmm_cross import NMM_cross
 from models.nmm_3layer import NMM_3layer
 # Utils
-from utils.metrics import get_roc_aucs, get_roc_curves
+from utils.metrics import get_roc_aucs, get_roc_curves, save_aggregate_roc
 from utils.directory_navigator import DirectoryNavigator
 from train import run_epoch
 
@@ -84,6 +84,11 @@ def get_eval_1_roc_auc_results(i_rt, network, dir_navi, args):
     # Compute ROC AUC scores for each class label.
     roc_aucs = get_roc_aucs(ens_df)
     
+    #print("DF")
+    #print(ens_df)
+    #print("AUC")
+    #print(roc_aucs)
+    
     # Save predictions and metrics.
     dir_navi.create_eval_x_dir(1, i_rt)
     ens_df.to_csv(dir_navi.get_eval_x_dir(1, i_rt)+'test_preds.csv', index=False)
@@ -151,7 +156,7 @@ def get_eval_3_roc_curves_results(i_rt, network, dir_navi, args):
     # Get ensembled predictions.
     ens_df = get_ensembled_preds(i_rt, loader, network, dir_navi, args)
     # Get roc curves.
-    roc_curves = pd.DataFrame.from_dict(get_roc_curves(ens_df), orient='index').T
+    roc_curves = pd.DataFrame.from_dict(get_roc_curves(ens_df, i_rt), orient='index').T
     # Save roc curves.
     dir_navi.create_eval_x_dir(3, i_rt)
     roc_curves.to_csv(dir_navi.get_eval_x_dir(3, i_rt)+'test_roc_curves.csv', index=False)
@@ -394,6 +399,8 @@ def main():
         get_eval_4_progression_results(i_rt, network, dir_navi, args)
 
         print(f"Evaluating train/test split {i_rt} is complete.")
+        
+    save_aggregate_roc()
 
 
 if __name__ == '__main__':

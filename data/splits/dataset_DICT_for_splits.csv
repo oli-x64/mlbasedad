@@ -1,0 +1,81 @@
+,FLDNAME,Modality,NumCat,TEXT,dtype
+0,RID,ID,DNA,Participant roster ID,int64
+1,COLPROT,Other,DNA,Study protocol of data collection,object
+2,ORIGPROT,Other,DNA,Original study protocol,object
+3,PTID,Other,DNA,Original study protocol,object
+4,SITE,Other,DNA,Site,int64
+5,VISCODE,Other,DNA,Visit code,object
+6,EXAMDATE,Other,DNA,Date,object
+7,FLDSTRENG,Other,DNA,MRI Field Strength,object
+8,FSVERSION,Other,DNA,FreeSurfer Software Version,object
+9,IMAGEUID,Other,DNA,Empty in original dict,float64
+10,Years_bl,Other,DNA,,float64
+11,Month_bl,Other,DNA,,float64
+12,Month,Other,DNA,Months since baseline,int64
+13,M,Other,DNA,Month since baseline,int64
+14,update_stamp,Other,DNA,Empty in original dict,object
+15,AGE,Demographic,Num,Age,float64
+16,PTGENDER,Demographic,Cat,Sex,object
+17,PTEDUCAT,Demographic,Num,Education,int64
+18,PTETHCAT,Demographic,Cat,Ethnicity,object
+19,PTRACCAT,Demographic,Cat,Race,object
+20,PTMARRY,Demographic,Cat,Marital,object
+21,APOE4,Genetic,Cat,ApoE4,float64
+22,CDRSB,Clinical,Num,CDR-SB,float64
+23,FAQ,Clinical,Num,FAQ,float64
+24,EcogPtMem,Clinical,Num,Pt ECog - Mem,float64
+25,EcogPtLang,Clinical,Num,Pt ECog - Lang,float64
+26,EcogPtVisspat,Clinical,Num,Pt ECog - Vis/Spat,float64
+27,EcogPtPlan,Clinical,Num,Pt ECog - Plan,float64
+28,EcogPtOrgan,Clinical,Num,Pt ECog - Organ,float64
+29,EcogPtDivatt,Clinical,Num,Pt ECog - Div atten,float64
+30,EcogPtTotal,Clinical,Num,Pt ECog - Total,float64
+31,EcogSPMem,Clinical,Num,SP ECog - Mem,float64
+32,EcogSPLang,Clinical,Num,SP ECog - Lang,float64
+33,EcogSPVisspat,Clinical,Num,SP ECog - Vis/Spat,float64
+34,EcogSPPlan,Clinical,Num,SP ECog - Plan,float64
+35,EcogSPOrgan,Clinical,Num,SP ECog - Organ,float64
+36,EcogSPDivatt,Clinical,Num,SP ECog - Div atten,float64
+37,EcogSPTotal,Clinical,Num,SP ECog - Total,float64
+38,ADAS11,Cognitive,Num,ADAS 11,float64
+39,ADAS13,Cognitive,Num,ADAS 13,float64
+40,ADASQ4,Cognitive,Num,ADAS Delayed Word Recall,float64
+41,MMSE,Cognitive,Num,MMSE,float64
+42,RAVLT_immediate,Cognitive,Num,RAVLT Immediate (sum of 5 trials),float64
+43,RAVLT_learning,Cognitive,Num,RAVLT Learning (trial 5 - trial 1),float64
+44,RAVLT_forgetting,Cognitive,Num,RAVLT Forgetting (trial 5 - delayed),float64
+45,RAVLT_perc_forgetting,Cognitive,Num,RAVLT Percent Forgetting,float64
+46,LDELTOTAL,Cognitive,Num,Logical Memory - Delayed Recall,float64
+47,DIGITSCOR,Cognitive,Num,Digit Symbol Substitution,float64
+48,TRABSCOR,Cognitive,Num,Trails B,float64
+49,MOCA,Cognitive,Num,MOCA,float64
+50,mPACCdigit,Cognitive,Num,ADNI modified Preclinical Alzheimer's Cognitive Composite (PACC) with Digit Symbol Substitution,float64
+51,mPACCtrailsB,Cognitive,Num,ADNI modified Preclinical Alzheimer's Cognitive Composite (PACC) with Trails B,float64
+52,ABETA,CSF,Num,CSF ABETA,float64
+53,TAU,CSF,Num,CSF TAU,float64
+54,PTAU,CSF,Num,CSF PTAU,float64
+55,FDG,PET,Num,"Average FDG-PET of angular, temporal, and posterior cingulate",float64
+56,PIB,PET,Num,"Average PIB SUVR of frontal cortex, anterior cingulate, precuneus cortex, and parietal cortex",float64
+57,AV45,PET,Num,Reference region - florbetapir mean of whole cerebellum.  Regions defined by Freesurfer; see Jagust lab PDF on LONI for details,float64
+58,Ventricles,MRI,Num,UCSF Ventricles,float64
+59,Hippocampus,MRI,Num,UCSF Hippocampus,float64
+60,WholeBrain,MRI,Num,UCSF WholeBrain,float64
+61,Entorhinal,MRI,Num,UCSF Entorhinal,float64
+62,Fusiform,MRI,Num,UCSF Fusiform,float64
+63,MidTemp,MRI,Num,UCSF Med Temp,float64
+64,ICV,MRI,Num,UCSF ICV,float64
+65,DX,Diagnosis,Cat,Diagnosis,object
+66,FMonth_0,FollowupMonth,Num,Exact month of the follow-up visit of year 0,float64
+67,FMonth_1,FollowupMonth,Num,Exact month of the follow-up visit of year 1,float64
+68,FMonth_2,FollowupMonth,Num,Exact month of the follow-up visit of year 2,float64
+69,FMonth_3,FollowupMonth,Num,Exact month of the follow-up visit of year 3,float64
+70,FMonth_4,FollowupMonth,Num,Exact month of the follow-up visit of year 4,float64
+71,FMonth_5,FollowupMonth,Num,Exact month of the follow-up visit of year 5,float64
+72,FDX_0,FollowupDX,Cat,Diagnosis of the follow-up visit of year 0,object
+73,FDX_1,FollowupDX,Cat,Diagnosis of the follow-up visit of year 1,object
+74,FDX_2,FollowupDX,Cat,Diagnosis of the follow-up visit of year 2,object
+75,FDX_3,FollowupDX,Cat,Diagnosis of the follow-up visit of year 3,object
+76,FDX_4,FollowupDX,Cat,Diagnosis of the follow-up visit of year 4,object
+77,FDX_5,FollowupDX,Cat,Diagnosis of the follow-up visit of year 5,object
+78,TRAJ_LABEL,Other,Cat,Disease projection trajectory label,
+79,TrainValTest,Other,Cat,"Indicates whether the subject is in train, validation, or test set.",

@@ -2,6 +2,22 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import roc_curve
+from sklearn.metrics import auc
+from scipy.interpolate import PchipInterpolator
+
+import matplotlib
+
+matplotlib.use('Agg')
+
+import matplotlib.pyplot as plt
+import os
+
+roc_storage = {}
+base_fpr = np.linspace(0, 1, 100)
+
+years = [1, 2, 3, 4, 5]
+baselines = ['CN', 'MCI']
+rts = range(1)
 
 def get_bacc(y_true, y_pred, weight):
     """
@@ -153,16 +169,133 @@ def get_roc_aucs(df):
             y_true = year_df['FollowupDX'].values
             y_pred = np.vstack(year_df['Pred'].values)
             
+            if dx_bl == 0:
+                y_pred_positive_class = y_pred[:, 1]
+                y_true_binary = (y_true == 1).astype(int)
+            elif dx_bl == 1:
+                y_pred_positive_class = y_pred[:, 2]
+                y_true_binary = (y_true == 2).astype(int)
+            
             # Compute ROCAUC
-            rocauc = roc_auc_score(y_true, y_pred[:, dx_bl])
+            rocauc = roc_auc_score(y_true_binary, y_pred_positive_class)
             
             # Add ROCAUC value to metrics dictionary
             rocaucs['ROCAUC_'+dx_bl_name+'_'+str(int(year))] = rocauc
             
     return rocaucs
+    
+def save_plot(fpr, tpr, thresholds, year, rt, dx_bl_name):
+    roc_auc = auc(fpr, tpr)
+    
+    """
+    plt.figure(figsize=(8, 6))
+    plt.plot(fpr, tpr, color='darkorange', lw=2, 
+             label=f'ROC curve (AUC = {roc_auc:.2f})')
+    plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
+    plt.xlabel('False Positive Rate (FPR)')
+    plt.ylabel('True Positive Rate (TPR)')
+    plt.title('Receiver Operating Characteristic (ROC) Curve')
+    plt.legend(loc="lower right")
+    plt.grid(True)
+    output_filename = 'roc_auc_curve.png'
+    plt.savefig(output_filename)
+    """
+    
+    #new_roc_data = pd.DataFrame({
+        #f'{year}_fpr_{dx_bl_name}': fpr,
+        #f'{rt}_tpr_{dx_bl_name}': tpr
+    #})
+    
+    new_roc_data = pd.DataFrame({
+        'fpr': fpr,
+        'tpr': tpr
+    })
+    
+    roc_storage[(year, dx_bl_name, rt)] = new_roc_data
+    
+    print('Stored ROC data for Y{} {} RT{}'.format(year, dx_bl_name, rt))
+    
+    """
+    OUTPUT_FILENAME = 'aucs.csv'
+    
+    print("Writing data for:")
+    print("Year: " + str(year))
+    print("RT: " + str(rt))
+    print("Baseline: " + str(dx_bl_name)) 
 
+    if os.path.exists(OUTPUT_FILENAME):
+        #print(f"File '{OUTPUT_FILENAME}' exists. Appending columns...")
+        
+        # Read the existing data
+        existing_df = pd.read_csv(OUTPUT_FILENAME)
+        
+        # Concatenate the existing columns and the new columns horizontally (axis=1)
+        # The column names 'fpr' and 'tpr' will be repeated.
+        final_df = pd.concat([existing_df, new_roc_data], axis=1)
+    else:
+        #print(f"File '{OUTPUT_FILENAME}' not found. Creating new file...")
+        final_df = new_roc_data
 
-def get_roc_curve(y_true, y_pred, dx_bl):
+    # Overwrite the file with the full, merged DataFrame.
+    # We use mode='w' (write) and header=True to ensure the full data,
+    # including the repeated column titles, is saved correctly.
+    final_df.to_csv(OUTPUT_FILENAME, index=False, mode='w', header=True)
+    
+    #print(f"\nSuccessfully saved plot to {OUTPUT_FILENAME}")
+    """
+    
+def store_mean_rocs():
+    averaged_results = {}
+
+    for year in years:
+        for baseline in baselines:
+            # A. Collect all TPR columns for this Year/Baseline group (across all 20 RTs)
+            tpr_collection = []
+            for rt in rts:
+                # Retrieve the dataframe from storage
+                df = roc_storage[(year, baseline, rt)]
+                # We only need the TPR column for averaging
+                tpr_collection.append(df['tpr'])
+                
+            # B. Concatenate them side-by-side
+            # Result is shape (101 rows, 20 columns)
+            combined_tpr = pd.concat(tpr_collection, axis=1)
+            
+            # C. Calculate the Mean TPR across the columns (axis=1)
+            mean_tpr = combined_tpr.mean(axis=1)
+            
+            # D. Create the final averaged DataFrame
+            avg_roc_df = pd.DataFrame({
+                'fpr': base_fpr,  # The standard X-axis
+                'mean_tpr': mean_tpr
+            })
+            
+            # Store the result
+            averaged_results[(year, baseline)] = avg_roc_df
+          
+    first_key = list(averaged_results.keys())[0]
+    
+    master_df = pd.DataFrame({
+        'FPR': averaged_results[first_key]['fpr']
+    })
+    
+    sorted_keys = sorted(averaged_results.keys())
+    
+    for year, baseline in sorted_keys:
+        # Define a descriptive column name
+        col_name = f"TPR_Year{year}_{baseline}"
+      
+        # Extract the mean_tpr column from the specific dataframe
+        tpr_values = averaged_results[(year, baseline)]['mean_tpr']
+      
+        # Add it to the master dataframe
+        master_df[col_name] = tpr_values
+      
+    master_df.to_csv("aucs.csv", index=False)
+
+def get_roc_curve(y_true, y_pred, dx_bl, year, rt, dx_bl_name):
     """
     Computes the ROC curve for a given diagnosis group (CN or MCI) and a given follow-up year.
 
@@ -188,19 +321,51 @@ def get_roc_curve(y_true, y_pred, dx_bl):
         
     # Compute the FPR, TPR, and thresholds for the ROC curve.
     fpr, tpr, thresholds = roc_curve(y_true, y_pred)  
-    
+
     # Interpolate the TPR values for a fixed set of FPR values (0 to 1 in increments of 0.01).
     mean_fpr = np.linspace(0, 1, 100)     
     interp_tpr = np.interp(mean_fpr, fpr, tpr)
-    
+
     # Set the first TPR value to 0 to ensure the curve starts at (0, 0).
     interp_tpr[0] = 0.0
     
     # Scale TPR values to percentages.
+    
+    save_plot(mean_fpr, smooth_interpolate_tpr(fpr, tpr), thresholds, year, rt, dx_bl_name)
+    
+    #print(interp_tpr * 100)
+    
     return interp_tpr * 100
+    
+def smooth_interpolate_tpr(fpr, tpr):
+    unique_fpr, indices = np.unique(fpr, return_index=True)
+    unique_tpr = tpr[indices]
+    
+    # Ensure the last point is exactly (1,1) if not present, to prevent cutoff
+    if unique_fpr[-1] != 1:
+        unique_fpr = np.append(unique_fpr, 1)
+        unique_tpr = np.append(unique_tpr, 1)
+
+    # 2. Initialize the PCHIP Interpolator
+    # This creates a function `pchip_func` that represents the smooth curve
+    pchip_func = PchipInterpolator(unique_fpr, unique_tpr)
+    
+    # 3. Generate the smooth points
+    mean_fpr = np.linspace(0, 1, 100)     
+    interp_tpr = pchip_func(mean_fpr)
+
+    # --- SMOOTHING LOGIC END ---
+    
+    # Set start to 0 and clip to ensure no floating point errors exceed 0-1 range
+    interp_tpr[0] = 0.0
+    interp_tpr = np.clip(interp_tpr, 0, 1)
+    
+    print("Smoothing TPR")
+    
+    return interp_tpr
 
 
-def get_roc_curves(df):
+def get_roc_curves(df, rt):
     """
     Computes the ROC curves for each follow-up year and baseline diagnosis (CN or MCI).
 
@@ -229,7 +394,12 @@ def get_roc_curves(df):
             y_pred = np.vstack(year_df['Pred'].values)
             
             # Compute the ROC curve for the given diagnosis group and follow-up year.
-            roc_curves['ROC_'+dx_bl_name+'_'+str(int(year))] = [get_roc_curve(y_true, y_pred, dx_bl)]
+            roc_curves['ROC_'+dx_bl_name+'_'+str(int(year))] = [get_roc_curve(y_true, y_pred, dx_bl, year, rt, dx_bl_name)]
             
     return roc_curves
+    
+def save_aggregate_roc():
+    store_mean_rocs()
+    
+    print("Saved master ROC file")
 

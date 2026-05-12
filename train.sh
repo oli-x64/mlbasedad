@@ -1,0 +1,1 @@
+python train.py --N_RT $1 --N_RV $2 --N_RI $3 --root data_2/ --model_name NMM  --model_width 128  --model_depth 3 --dropout_rate 0.2 --batch_size 32  --seed 1337 --learning_rate 1e-5 --weight_decay 1e-6

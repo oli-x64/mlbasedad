@@ -1,0 +1,80 @@
+FLDNAME,Modality,NumCat,TEXT,dtype
+RID,ID,DNA,Participant roster ID,int64
+COLPROT,Other,DNA,Study protocol of data collection,object
+ORIGPROT,Other,DNA,Original study protocol,object
+PTID,Other,DNA,Original study protocol,object
+SITE,Other,DNA,Site,int64
+VISCODE,Other,DNA,Visit code,object
+EXAMDATE,Other,DNA,Date,object
+FLDSTRENG,Other,DNA,MRI Field Strength,object
+FSVERSION,Other,DNA,FreeSurfer Software Version,object
+IMAGEUID,Other,DNA,Empty in original dict,float64
+Years_bl,Other,DNA,,float64
+Month_bl,Other,DNA,,float64
+Month,Other,DNA,Months since baseline,int64
+M,Other,DNA,Month since baseline,int64
+update_stamp,Other,DNA,Empty in original dict,object
+AGE,Demographic,Num,Age,float64
+PTGENDER,Demographic,Cat,Sex,object
+PTEDUCAT,Demographic,Num,Education,int64
+PTETHCAT,Demographic,Cat,Ethnicity,object
+PTRACCAT,Demographic,Cat,Race,object
+PTMARRY,Demographic,Cat,Marital,object
+APOE4,Genetic,Cat,ApoE4,float64
+CDRSB,Clinical,Num,CDR-SB,float64
+FAQ,Clinical,Num,FAQ,float64
+EcogPtMem,Clinical,Num,Pt ECog - Mem,float64
+EcogPtLang,Clinical,Num,Pt ECog - Lang,float64
+EcogPtVisspat,Clinical,Num,Pt ECog - Vis/Spat,float64
+EcogPtPlan,Clinical,Num,Pt ECog - Plan,float64
+EcogPtOrgan,Clinical,Num,Pt ECog - Organ,float64
+EcogPtDivatt,Clinical,Num,Pt ECog - Div atten,float64
+EcogPtTotal,Clinical,Num,Pt ECog - Total,float64
+EcogSPMem,Clinical,Num,SP ECog - Mem,float64
+EcogSPLang,Clinical,Num,SP ECog - Lang,float64
+EcogSPVisspat,Clinical,Num,SP ECog - Vis/Spat,float64
+EcogSPPlan,Clinical,Num,SP ECog - Plan,float64
+EcogSPOrgan,Clinical,Num,SP ECog - Organ,float64
+EcogSPDivatt,Clinical,Num,SP ECog - Div atten,float64
+EcogSPTotal,Clinical,Num,SP ECog - Total,float64
+ADAS11,Cognitive,Num,ADAS 11,float64
+ADAS13,Cognitive,Num,ADAS 13,float64
+ADASQ4,Cognitive,Num,ADAS Delayed Word Recall,float64
+MMSE,Cognitive,Num,MMSE,float64
+RAVLT_immediate,Cognitive,Num,RAVLT Immediate (sum of 5 trials),float64
+RAVLT_learning,Cognitive,Num,RAVLT Learning (trial 5 - trial 1),float64
+RAVLT_forgetting,Cognitive,Num,RAVLT Forgetting (trial 5 - delayed),float64
+RAVLT_perc_forgetting,Cognitive,Num,RAVLT Percent Forgetting,float64
+LDELTOTAL,Cognitive,Num,Logical Memory - Delayed Recall,float64
+DIGITSCOR,Cognitive,Num,Digit Symbol Substitution,float64
+TRABSCOR,Cognitive,Num,Trails B,float64
+MOCA,Cognitive,Num,MOCA,float64
+mPACCdigit,Cognitive,Num,ADNI modified Preclinical Alzheimer's Cognitive Composite (PACC) with Digit Symbol Substitution,float64
+mPACCtrailsB,Cognitive,Num,ADNI modified Preclinical Alzheimer's Cognitive Composite (PACC) with Trails B,float64
+ABETA,CSF,Num,CSF ABETA,float64
+TAU,CSF,Num,CSF TAU,float64
+PTAU,CSF,Num,CSF PTAU,float64
+FDG,PET,Num,"Average FDG-PET of angular, temporal, and posterior cingulate",float64
+PIB,PET,Num,"Average PIB SUVR of frontal cortex, anterior cingulate, precuneus cortex, and parietal cortex",float64
+AV45,PET,Num,Reference region - florbetapir mean of whole cerebellum.  Regions defined by Freesurfer; see Jagust lab PDF on LONI for details,float64
+Ventricles,MRI,Num,UCSF Ventricles,float64
+Hippocampus,MRI,Num,UCSF Hippocampus,float64
+WholeBrain,MRI,Num,UCSF WholeBrain,float64
+Entorhinal,MRI,Num,UCSF Entorhinal,float64
+Fusiform,MRI,Num,UCSF Fusiform,float64
+MidTemp,MRI,Num,UCSF Med Temp,float64
+ICV,MRI,Num,UCSF ICV,float64
+DX,Diagnosis,Cat,Diagnosis,object
+FMonth_0,FollowupMonth,Num,Exact month of the follow-up visit of year 0,float64
+FMonth_1,FollowupMonth,Num,Exact month of the follow-up visit of year 1,float64
+FMonth_2,FollowupMonth,Num,Exact month of the follow-up visit of year 2,float64
+FMonth_3,FollowupMonth,Num,Exact month of the follow-up visit of year 3,float64
+FMonth_4,FollowupMonth,Num,Exact month of the follow-up visit of year 4,float64
+FMonth_5,FollowupMonth,Num,Exact month of the follow-up visit of year 5,float64
+FDX_0,FollowupDX,Cat,Diagnosis of the follow-up visit of year 0,object
+FDX_1,FollowupDX,Cat,Diagnosis of the follow-up visit of year 1,object
+FDX_2,FollowupDX,Cat,Diagnosis of the follow-up visit of year 2,object
+FDX_3,FollowupDX,Cat,Diagnosis of the follow-up visit of year 3,object
+FDX_4,FollowupDX,Cat,Diagnosis of the follow-up visit of year 4,object
+FDX_5,FollowupDX,Cat,Diagnosis of the follow-up visit of year 5,object
+TRAJ_LABEL,Other,Cat,Disease projection trajectory label,
